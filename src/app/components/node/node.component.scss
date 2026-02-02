@@ -1,0 +1,25 @@
+.node-container {
+  margin-left: 20px;
+  
+  .node-content {
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    width: fit-content;
+    
+    &:hover {
+      background-color: #e3e3e3;
+    }
+    
+    .icon { margin-right: 8px; font-size: 0.8rem; }
+    .label { font-weight: bold; }
+  }
+
+  .node-children {
+    border-left: 1px dashed #ccc;
+    padding-left: 10px;
+  }
+}

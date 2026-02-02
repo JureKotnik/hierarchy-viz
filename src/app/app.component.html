@@ -1,0 +1,4 @@
+<h1>Hierarchy Visualizer</h1>
+<div class="canvas">
+  <app-node *ngFor="let rootNode of treeData$ | async" [node]="rootNode"></app-node>
+</div>
