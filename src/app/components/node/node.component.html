@@ -1,0 +1,13 @@
+<div class="node-container">
+  <div class="node-content" (click)="toggle()">
+    <span class="icon">{{ node.isExpanded ? '▼' : '▶' }}</span>
+    <span class="label">{{ node.name }}</span>
+  </div>
+
+  <div class="node-children" *ngIf="node.isExpanded && node.children">
+    <app-node
+      *ngFor="let child of node.children" 
+      [node]="child">
+    </app-node>
+  </div>
+</div>
