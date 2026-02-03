@@ -1,13 +1,37 @@
 <div class="node-container">
-  <div class="node-content" (click)="toggle()">
-    <span class="icon">{{ node.isExpanded ? '▼' : '▶' }}</span>
-    <span class="label">{{ node.name }}</span>
+
+  <div class="node-content" [class.highlighted]="isHighlighted">
+    
+    <span 
+      class="toggle-icon" 
+      (click)="toggle()"
+      [style.visibility]="(node.children && node.children.length) ? 'visible' : 'hidden'">
+      {{ node.isExpanded ? '▼' : '▶' }}
+    </span>
+
+    <span class="node-label" (click)="toggle()">
+      {{ node.name }}
+    </span>
+
+    <div class="node-actions">
+      <button class="btn-add" (click)="addChild($event)" title="Add Child">
+        +
+      </button>
+      
+      <button 
+        class="btn-delete" 
+        (click)="removeSelf($event)" 
+        title="Delete Node">
+        🗑️
+      </button>
+    </div>
   </div>
 
   <div class="node-children" *ngIf="node.isExpanded && node.children">
-    <app-node
+    <app-node 
       *ngFor="let child of node.children" 
       [node]="child">
     </app-node>
   </div>
+
 </div>

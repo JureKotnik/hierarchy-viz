@@ -1,4 +1,39 @@
-<h1>Hierarchy Visualizer</h1>
-<div class="canvas">
-  <app-node *ngFor="let rootNode of treeData$ | async" [node]="rootNode"></app-node>
+<div class="app-container">
+  
+  <header class="main-header">
+    <div class="brand">
+      <h1>HierarchyViz <span class="badge">Pro</span></h1>
+      <p>XML/JSON Recursive Data Visualizer</p>
+    </div>
+
+    <div class="search-bar">
+      <input 
+        #searchInput
+        type="text" 
+        placeholder="Search nodes (e.g., 'CTO')..."
+        (keyup)="onSearch(searchInput.value)"
+      >
+      <span class="search-icon">🔍</span>
+    </div>
+  </header>
+
+  <main class="workspace">
+    
+    <div class="tree-wrapper" *ngIf="treeData$ | async as treeData">
+      <app-node 
+        *ngFor="let rootNode of treeData" 
+        [node]="rootNode">
+      </app-node>
+    </div>
+
+    <div class="empty-state" *ngIf="(treeData$ | async)?.length === 0">
+      <p>No data loaded. Start by adding a root node.</p>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>Angular 19 • RxJS • Recursive Algorithms</p>
+  </footer>
+
 </div>
