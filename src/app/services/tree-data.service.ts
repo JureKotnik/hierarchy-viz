@@ -24,4 +24,29 @@ export class TreeDataService {
   getTree() {
     return this.treeSubject.value;
   }
+
+  private searchIdsSubject = new BehaviorSubject<string[]>([]);
+  searchIds$ = this.searchIdsSubject.asObservable();
+
+  search(term: string) {
+    if (!term.trim()) {
+      this.searchIdsSubject.next([]);
+      return;
+    }
+    
+    const matches: string[] = [];
+    this.performSearch(this.treeSubject.value, term.toLowerCase(), matches);
+    this.searchIdsSubject.next(matches);
+  }
+
+  private performSearch(nodes: TreeNode[], term: string, matches: string[]) {
+    for (const node of nodes) {
+      if (node.name.toLowerCase().includes(term)) {
+        matches.push(node.id);
+      }
+      if (node.children) {
+        this.performSearch(node.children, term, matches);
+      }
+    }
+  }
 }
