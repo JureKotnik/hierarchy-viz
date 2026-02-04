@@ -113,4 +113,78 @@ export class TreeDataService {
       }
     }
   }
+
+  downloadJSON(): void {
+    const data = this.treeSubject.value;
+    const jsonString = JSON.stringify(data, null, 2);
+    this.triggerDownload(jsonString, 'hierarchy-data.json', 'application/json');
+  }
+
+  downloadXML(): void {
+    const data = this.treeSubject.value;
+    let xmlString = '<?xml version="1.0" encoding="UTF-8"?>\n<hierarchy>\n';
+    xmlString += this.nodesToXml(data); 
+    xmlString += '</hierarchy>';
+    this.triggerDownload(xmlString, 'hierarchy-data.xml', 'application/xml');
+  }
+
+  importXML(xmlContent: string): void {
+    try {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlContent, 'text/xml');
+      const hierarchyNode = xmlDoc.getElementsByTagName('hierarchy')[0];
+      if (!hierarchyNode) throw new Error('Invalid XML: Missing <hierarchy> tag');
+      const newTree: TreeNode[] = this.xmlToNodes(Array.from(hierarchyNode.children));    
+      this.treeSubject.next(newTree);
+      alert('XML Imported Successfully!');
+    } catch (e) {
+      console.error(e);
+      alert('Failed to parse XML. Please check the format.');
+    }
+  }
+
+  private nodesToXml(nodes: TreeNode[]): string {
+    let xml = '';
+    for (const node of nodes) {
+      xml += `  <node id="${node.id}" name="${node.name}">\n`;  
+      if (node.children && node.children.length > 0) {
+        xml += this.nodesToXml(node.children);
+      }
+      xml += `  </node>\n`;
+    }
+    return xml;
+  }
+
+  private xmlToNodes(xmlElements: Element[]): TreeNode[] {
+    const nodes: TreeNode[] = [];
+    
+    for (const el of xmlElements) {
+      if (el.tagName === 'node') {
+        const newNode: TreeNode = {
+          id: el.getAttribute('id') || Date.now().toString(),
+          name: el.getAttribute('name') || 'Unknown',
+          children: [],
+          isExpanded: true
+        };
+
+        if (el.children.length > 0) {
+          newNode.children = this.xmlToNodes(Array.from(el.children));
+        }
+
+        nodes.push(newNode);
+      }
+    }
+    return nodes;
+  }
+
+  private triggerDownload(content: string, fileName: string, contentType: string): void {
+    const blob = new Blob([content], { type: contentType });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+
 }
