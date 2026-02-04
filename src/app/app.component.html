@@ -15,6 +15,25 @@
       >
       <span class="search-icon">🔍</span>
     </div>
+    <div class="toolbar">
+  <div class="group">
+    <button (click)="downloadJson()">💾 Export JSON</button>
+    <button (click)="downloadXml()">📄 Export XML</button>
+  </div>
+  
+  <div class="group">
+    <input 
+      #fileInput 
+      type="file" 
+      (change)="onFileSelected($event)" 
+      accept=".xml" 
+      style="display: none;"
+    >
+    <button class="btn-secondary" (click)="fileInput.click()">
+      📂 Import XML
+    </button>
+  </div>
+</div>
   </header>
 
   <main class="workspace">

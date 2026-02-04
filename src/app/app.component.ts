@@ -23,4 +23,23 @@ export class AppComponent implements OnInit {
   onSearch(term: string): void {
     this.treeService.search(term);
   }
+  downloadJson() {
+  this.treeService.downloadJSON();
+}
+
+downloadXml() {
+  this.treeService.downloadXML();
+}
+
+onFileSelected(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      const xmlContent = e.target.result;
+      this.treeService.importXML(xmlContent);
+    };
+    reader.readAsText(file);
+  }
+ }
 }

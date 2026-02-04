@@ -10,12 +10,12 @@
     background-color: #f9f9f9;
     width: fit-content;
     
-    &:hover {
-      background-color: #e3e3e3;
-    }
-    
-    .icon { margin-right: 8px; font-size: 0.8rem; }
-    .label { font-weight: bold; }
+    &.highlighted {
+        background-color: #fff3cd !important;
+        border-color: #ffc107 !important;   
+        box-shadow: 0 0 8px rgba(255, 193, 7, 0.6); 
+        font-weight: bold;
+  }
   }
 
   .node-children {
