@@ -41,6 +41,12 @@ export class TreeDataService {
 
   constructor() { }
 
+  /**
+ * Recursively searches for a parent node by ID and appends a new child.
+ * @param parentId - The UUID of the parent node
+ * @param name - The display name for the new node
+ */
+
   addNode(parentId: string, name: string): void {
     const currentTree = this.treeSubject.value;
     
@@ -50,6 +56,12 @@ export class TreeDataService {
       this.treeSubject.next([...currentTree]);
     }
   }
+
+  /**
+ * Performs a recursive filter operation to remove a node and its descendants from the tree.
+ * Implements an immutable update pattern for OnPush performance.
+ * @param nodeId - The UUID of the node to remove
+ */
 
   deleteNode(nodeId: string): void {
     const currentTree = this.treeSubject.value;
@@ -119,6 +131,11 @@ export class TreeDataService {
     const jsonString = JSON.stringify(data, null, 2);
     this.triggerDownload(jsonString, 'hierarchy-data.json', 'application/json');
   }
+
+  /**
+ * Serializes the current tree state into an XML string.
+ * Uses recursive traversal to build the XML DOM structure.
+ */
 
   downloadXML(): void {
     const data = this.treeSubject.value;
