@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { TreeNode } from '../models/tree-node.model';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +40,13 @@ export class TreeDataService {
   private searchIdsSubject = new BehaviorSubject<string[]>([]);
   searchIds$ = this.searchIdsSubject.asObservable();
 
-  constructor() { }
+  constructor(private notificationService: NotificationService) { }
+
+  /**
+ * Recursively searches for a parent node by ID and appends a new child.
+ * @param parentId - The UUID of the parent node
+ * @param name - The display name for the new node
+ */
 
   addNode(parentId: string, name: string): void {
     const currentTree = this.treeSubject.value;
@@ -50,6 +57,12 @@ export class TreeDataService {
       this.treeSubject.next([...currentTree]);
     }
   }
+
+  /**
+ * Performs a recursive filter operation to remove a node and its descendants from the tree.
+ * Implements an immutable update pattern for OnPush performance.
+ * @param nodeId - The UUID of the node to remove
+ */
 
   deleteNode(nodeId: string): void {
     const currentTree = this.treeSubject.value;
@@ -120,6 +133,11 @@ export class TreeDataService {
     this.triggerDownload(jsonString, 'hierarchy-data.json', 'application/json');
   }
 
+  /**
+ * Serializes the current tree state into an XML string.
+ * Uses recursive traversal to build the XML DOM structure.
+ */
+
   downloadXML(): void {
     const data = this.treeSubject.value;
     let xmlString = '<?xml version="1.0" encoding="UTF-8"?>\n<hierarchy>\n';
@@ -136,7 +154,7 @@ export class TreeDataService {
       if (!hierarchyNode) throw new Error('Invalid XML: Missing <hierarchy> tag');
       const newTree: TreeNode[] = this.xmlToNodes(Array.from(hierarchyNode.children));    
       this.treeSubject.next(newTree);
-      alert('XML Imported Successfully!');
+      this.notificationService.show('XML Imported Successfully!');
     } catch (e) {
       console.error(e);
       alert('Failed to parse XML. Please check the format.');
