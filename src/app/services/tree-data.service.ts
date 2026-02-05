@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { TreeNode } from '../models/tree-node.model';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +40,7 @@ export class TreeDataService {
   private searchIdsSubject = new BehaviorSubject<string[]>([]);
   searchIds$ = this.searchIdsSubject.asObservable();
 
-  constructor() { }
+  constructor(private notificationService: NotificationService) { }
 
   /**
  * Recursively searches for a parent node by ID and appends a new child.
@@ -153,7 +154,7 @@ export class TreeDataService {
       if (!hierarchyNode) throw new Error('Invalid XML: Missing <hierarchy> tag');
       const newTree: TreeNode[] = this.xmlToNodes(Array.from(hierarchyNode.children));    
       this.treeSubject.next(newTree);
-      alert('XML Imported Successfully!');
+      this.notificationService.show('XML Imported Successfully!');
     } catch (e) {
       console.error(e);
       alert('Failed to parse XML. Please check the format.');
