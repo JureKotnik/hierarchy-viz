@@ -1,59 +1,53 @@
-# HierarchyViz
+# HierarchyViz: Recursive Data Visualizer
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.5.
+An enterprise-grade **Angular 19** application designed to visualize, manipulate, and serialize complex hierarchical data structures. This project demonstrates strict TypeScript typing, recursive algorithms, and reactive state management.
 
-## Development server
+## 🎯 Technical Showcase
+This project was built to demonstrate proficiency in:
+- **Angular 2+ (v19):** Standalone components, Signals, and Directives.
+- **Algorithms & Data Structures:**
+  - **Recursive Traversal:** Custom recursive components for infinite nesting.
+  - **Depth-First Search (DFS):** Implemented for the node search/filtering system.
+  - **Tree Manipulation:** Recursive deletion algorithms ensuring memory safety.
+- **Data Serialization:** - Manual **XML Parsing** using DOM traversal (no external libraries).
+  - JSON Import/Export.
+- **RxJS & State Management:** `BehaviorSubject` for reactive data flow (Singleton Service pattern).
+- **Quality Assurance:** Unit testing with Jasmine/Karma.
 
-To start a local development server, run:
+## 🚀 Features
+1.  **Dynamic Tree Management:** Add, edit, and recursively delete nodes.
+2.  **Search System:** Real-time filtering with visual highlighting.
+3.  **Interoperability:** seamless conversion between JSON and XML formats.
+4.  **Responsive UI:** Mobile-friendly toolbar and layout.
 
-```bash
-ng serve
-```
+## 🛠️ Installation & Setup
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+1.  **Clone the repository**
+    ```bash
+    git clone [https://github.com/jurekotnik/hierarchy-viz.git](https://github.com/jurekotnik/hierarchy-viz.git)
+    cd hierarchy-viz
+    ```
 
-## Code scaffolding
+2.  **Install Dependencies**
+    ```bash
+    npm install
+    ```
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+3.  **Run Development Server**
+    ```bash
+    ng serve
+    ```
+    Navigate to `http://localhost:4200/`.
 
-```bash
-ng generate component component-name
-```
+4.  **Run Unit Tests**
+    ```bash
+    ng test
+    ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 📂 Project Structure
+- `src/app/models/tree-node.model.ts`: Recursive interface definition.
+- `src/app/services/tree-data.service.ts`: Core logic (DFS, XML parsing, State).
+- `src/app/components/node`: The recursive UI component.
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+*Created by Jure Kotnik*
