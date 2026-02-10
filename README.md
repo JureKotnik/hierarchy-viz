@@ -24,7 +24,7 @@ This project was built to demonstrate proficiency in:
 
 1.  **Clone the repository**
     ```bash
-    git clone [https://github.com/jurekotnik/hierarchy-viz.git](https://github.com/jurekotnik/hierarchy-viz.git)
+    git clone https://github.com/jurekotnik/hierarchy-viz.git
     cd hierarchy-viz
     ```
 
